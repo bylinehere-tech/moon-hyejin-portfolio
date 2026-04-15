@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//opt/**)",
+      "Read(//usr/local/**)",
+      "Bash(mdfind -name \"node\" -onlyin /Applications)",
+      "Bash(mdfind \"kMDItemCFBundleIdentifier == 'org.nodejs*'\")",
+      "Bash(sw_vers)",
+      "Bash(curl -fsSL \"https://nodejs.org/dist/v20.19.1/node-v20.19.1-darwin-x64.tar.gz\" -o /tmp/node.tar.gz)",
+      "Bash(tar -xzf /tmp/node.tar.gz -C /tmp)",
+      "Read(//tmp/node-v20.19.1-darwin-x64/**)",
+      "Bash(sudo cp *)",
+      "Bash(cp -r /tmp/node-v20.19.1-darwin-x64 ~/nodejs)",
+      "Bash(~/nodejs/bin/node --version)",
+      "Bash(~/nodejs/bin/npm --version)",
+      "Bash(export PATH=\"$HOME/nodejs/bin:$PATH\")",
+      "Bash(npm --version)",
+      "Read(//Users/sujinmoon/nodejs/bin/**)",
+      "Read(//Users/sujinmoon/nodejs/lib/node_modules/**)",
+      "Read(//private/tmp/node-v20.19.1-darwin-x64/lib/node_modules/npm/bin/**)",
+      "Read(//private/tmp/node-v20.19.1-darwin-x64/lib/**)",
+      "Bash(rm ~/nodejs/bin/npm ~/nodejs/bin/npx ~/nodejs/bin/corepack)",
+      "Bash(ln -s ../lib/node_modules/npm/bin/npm-cli.js ~/nodejs/bin/npm)",
+      "Bash(ln -s ../lib/node_modules/npm/bin/npx-cli.js ~/nodejs/bin/npx)",
+      "Bash(chmod +x ~/nodejs/bin/npm ~/nodejs/bin/npx)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(grep -o 'accent\\\\|#9F8FD0\\\\|#C5A55A\\\\|0A0910\\\\|0A0A0A' dist/assets/*.css)",
+      "Bash(grep -o '#[0-9A-Fa-f]\\\\{6\\\\}' /Users/sujinmoon/Desktop/chemiflow/dist/assets/*.css)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(curl -s \"http://localhost:5173/src/index.css\")",
+      "Bash(npx localtunnel *)",
+      "Bash(jobs)",
+      "Bash(jobs -l)",
+      "Bash(node /Users/sujinmoon/.npm/_npx/75ac80b86e83d4a2/node_modules/.bin/lt --port 5173)",
+      "Bash(curl -s https://ipv4.icanhazip.com)",
+      "Bash(git --version)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}
