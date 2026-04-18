@@ -54,9 +54,17 @@ export default function Navbar() {
         {/* 로고 */}
         <button
           onClick={() => scrollTo('#hero')}
-          className="font-display text-lg font-bold text-text-primary tracking-wider hover:text-accent transition-colors"
+          className="flex items-center gap-2.5 group"
+          aria-label="Chemiflow — 문혜진 홈으로"
         >
-          문혜진
+          <img
+            src="/images/logo-trail.svg"
+            alt=""
+            className="h-7 w-auto transition-transform duration-300 group-hover:scale-105"
+          />
+          <span className="font-display italic text-lg font-normal text-text-primary tracking-wide group-hover:text-accent transition-colors">
+            Chemiflow
+          </span>
         </button>
 
         {/* 데스크톱 메뉴 */}

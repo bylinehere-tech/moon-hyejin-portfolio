@@ -8,8 +8,8 @@ html {
 }
 
 body {
-  background-color: #0A0910;
-  color: #F0EEFF;
+  background-color: #F4EDE1;
+  color: #2D2447;
   font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,14 +20,48 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0910;
+  background: #F4EDE1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2D2940;
+  background: #D6C9AE;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9F8FD0;
+  background: #9A85C5;
+}
+
+/* ── 브랜드 타이틀 시머 ───────────────────────────────── */
+@keyframes chemiflow-shine {
+  0%   { background-position: 200% 50%; }
+  85%  { background-position: -100% 50%; }
+  100% { background-position: -100% 50%; }
+}
+
+.chemiflow-wordmark {
+  background-image: linear-gradient(
+    115deg,
+    #2D2447 0%,
+    #2D2447 42%,
+    #C9BEE1 48%,
+    #F4EDE1 50%,
+    #C9BEE1 52%,
+    #2D2447 58%,
+    #2D2447 100%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  filter:
+    drop-shadow(0 1px 1px rgba(45, 36, 71, 0.18))
+    drop-shadow(0 6px 18px rgba(45, 36, 71, 0.22));
+  animation: chemiflow-shine 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chemiflow-wordmark { animation: none; background-position: 50% 50%; }
 }
 
 /* ── 유틸리티 레이어 ─────────────────────────────────── */
@@ -51,6 +85,6 @@ body {
     bottom: -4px;
     width: 100%;
     height: 2px;
-    background-color: #9F8FD0;
+    background-color: #6B5A96;
   }
 }

@@ -32,7 +32,7 @@ export default function HeroSection() {
           poster=""
         />
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-bg-primary via-[#0f0c1a] to-[#13111E]">
+        <div className="absolute inset-0 bg-gradient-to-br from-bg-primary via-[#EEE2CB] to-[#E0D3B9]">
           {/* 미묘한 그레인 텍스처 */}
           <div
             className="absolute inset-0 opacity-[0.03]"
@@ -43,8 +43,8 @@ export default function HeroSection() {
         </div>
       )}
 
-      {/* 오버레이 그라디언트 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/80 via-transparent to-bg-primary/30" />
+      {/* 오버레이 그라디언트 — 하단 텍스트 영역 가독성 보강 */}
+      <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/60 via-transparent to-bg-primary/10" />
 
       {/* 텍스트 컨텐츠 */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
@@ -58,9 +58,9 @@ export default function HeroSection() {
 
         <motion.h1
           {...fadeUp(0.4)}
-          className="font-display text-hero font-black text-text-primary mb-6 leading-none"
+          className="chemiflow-wordmark font-display italic text-hero font-normal mb-6 leading-[1.2] pb-4"
         >
-          문혜진
+          Chemiflow
         </motion.h1>
 
         <motion.p

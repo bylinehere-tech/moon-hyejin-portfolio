@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" role="img" aria-label="Chemiflow">
+  <g transform="translate(40 40)">
+    <rect x="-28" y="-28" width="56" height="56" transform="rotate(45)" fill="#9A85C5"/>
+    <rect x="-19" y="-19" width="38" height="38" transform="rotate(45)" fill="#C9BEE1"/>
+    <path d="M -7 -11 L 11 0 L -7 11 Z" fill="#FFFFFF"/>
+  </g>
+  <g stroke="#9A85C5" stroke-width="2.4" stroke-linecap="round" fill="none">
+    <line x1="78" y1="40" x2="104" y2="24"/>
+    <line x1="80" y1="40" x2="110" y2="40"/>
+    <line x1="78" y1="40" x2="104" y2="56"/>
+  </g>
+</svg>

@@ -7,15 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        'bg-primary':    '#0A0910',
-        'bg-secondary':  '#13111E',
-        'bg-tertiary':   '#1E1A2E',
-        'text-primary':  '#F0EEFF',
-        'text-secondary':'#9590AA',
-        'accent':        '#9F8FD0',
-        'accent-hover':  '#B5ACDF',
-        'accent-sub':    '#C4899A',
-        'border-custom': '#2D2940',
+        // Chemiflow brand palette — Ivory Cream base (light theme)
+        'bg-primary':    '#F4EDE1',  // Ivory Cream (brand)
+        'bg-secondary':  '#EAE0CD',  // warm cream — cards
+        'bg-tertiary':   '#E0D3B9',  // darker cream — hover / inputs
+        'text-primary':  '#2D2447',  // Deep Plum (brand) — main text
+        'text-secondary':'#6B5A96',  // Lavender Deep — muted text
+        'accent':        '#6B5A96',  // Lavender Deep — primary interactive
+        'accent-hover':  '#2D2447',  // Deep Plum — hover
+        'accent-sub':    '#9A85C5',  // Lavender Primary — secondary accent
+        'border-custom': '#D6C9AE',
       },
       fontFamily: {
         pretendard: ['Pretendard', 'Apple SD Gothic Neo', 'sans-serif'],
