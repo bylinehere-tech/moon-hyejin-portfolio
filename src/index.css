@@ -62,6 +62,17 @@ body {
 @keyframes live-pulse { 50% { opacity: 0.3; } }
 .live-dot { animation: live-pulse 1.6s ease-in-out infinite; }
 
+/* ── Chemiflow 워드마크 조리개 (상시 숨쉬기) ─────────── */
+@keyframes aperture-breathe {
+  0%, 100% { transform: rotate(0deg)   scale(1);    }
+  50%      { transform: rotate(22deg)  scale(0.9);  }
+}
+.aperture-blades {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aperture-breathe 5.2s ease-in-out infinite;
+}
+
 /* ── Hero H1 line-up ──────────────────────────────────── */
 .display-lines h1 {
   font-weight: 600;
@@ -77,9 +88,9 @@ body {
   transform: translateY(110%);
   animation: lineUp 1s cubic-bezier(.2,.8,.2,1) forwards;
 }
-.display-lines .line:nth-child(1) > span { animation-delay: 2.45s; }
-.display-lines .line:nth-child(2) > span { animation-delay: 2.55s; }
-.display-lines .line:nth-child(3) > span { animation-delay: 2.65s; }
+.display-lines .line:nth-child(1) > span { animation-delay: 0.85s; }
+.display-lines .line:nth-child(2) > span { animation-delay: 0.95s; }
+.display-lines .line:nth-child(3) > span { animation-delay: 1.05s; }
 .display-lines em {
   font-style: normal;
   color: #AFA4CE;
@@ -93,7 +104,7 @@ body {
   margin-left: 0.06em;
   vertical-align: 0.42em;
   transform: scale(0);
-  animation: dotIn 0.4s ease-out 3.2s forwards;
+  animation: dotIn 0.4s ease-out 1.5s forwards;
 }
 
 @keyframes lineUp { to { transform: translateY(0); } }
@@ -153,15 +164,16 @@ body {
   100% { transform: translateY(0); }
 }
 
-.hero-eyebrow { opacity: 0; animation: fadeUp .9s ease-out 2.2s forwards; }
-.hero-deck    { opacity: 0; animation: fadeUp .9s ease-out 2.9s forwards; }
-.hero-meta    { opacity: 0; animation: fadeUp .9s ease-out 3.1s forwards; }
-.hero-scroll  { opacity: 0; animation: fadeUp 1s ease-out 3.3s forwards; }
-.hero-scroll-tick { animation: scrollTick 2.2s ease-in-out 3.8s infinite; }
+.hero-eyebrow { opacity: 0; animation: fadeUp .9s ease-out 0.5s forwards; }
+.hero-deck    { opacity: 0; animation: fadeUp .9s ease-out 1.3s forwards; }
+.hero-meta    { opacity: 0; animation: fadeUp .9s ease-out 1.5s forwards; }
+.hero-scroll  { opacity: 0; animation: fadeUp 1s ease-out 1.7s forwards; }
+.hero-scroll-tick { animation: scrollTick 2.2s ease-in-out 2.2s infinite; }
 
 /* ── Reduced motion guards ────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .chemiflow-wordmark { animation: none; background-position: 50% 50%; }
+  .aperture-blades    { animation: none; }
   .live-dot { animation: none; }
   .display-lines .line > span { transform: translateY(0); animation: none; }
   .display-lines em::after    { transform: scale(1);      animation: none; }
