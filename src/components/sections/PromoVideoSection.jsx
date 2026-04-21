@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, ChevronDown } from 'lucide-react'
+import { Play } from 'lucide-react'
 import SectionWrapper from '../common/SectionWrapper'
 import GenreFilter    from '../common/GenreFilter'
 import YouTubeLightbox from '../common/YouTubeLightbox'
@@ -25,8 +25,7 @@ function VideoCard({ item, onClick }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* 썸네일 */}
-      <div className="relative overflow-hidden rounded mb-3">
+      <div className="relative overflow-hidden mb-4">
         {item.thumbnail ? (
           <img
             src={item.thumbnail}
@@ -38,39 +37,41 @@ function VideoCard({ item, onClick }) {
           <PlaceholderImage aspectRatio="16/9" />
         )}
 
-        {/* 호버 오버레이 */}
         <AnimatePresence>
           {hovered && (
             <motion.div
-              className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-2"
+              className="absolute inset-0 bg-navy/70 flex flex-col items-center justify-center gap-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="w-12 h-12 border-2 border-accent rounded-full flex items-center justify-center">
-                <Play size={20} className="text-accent ml-0.5" />
+              <div className="w-12 h-12 border border-lavender rounded-full flex items-center justify-center">
+                <Play size={18} className="text-lavender ml-0.5" />
               </div>
-              <span className="text-xs text-text-secondary tracking-widest">
-                {item.youtubeId ? 'PLAY' : 'COMING SOON'}
+              <span className="text-[10px] text-lavender tracking-[0.14em] uppercase">
+                {item.youtubeId ? 'Play' : 'Coming soon'}
               </span>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* 카드 정보 */}
-      <div>
-        <h3 className="text-text-primary text-sm font-semibold leading-snug mb-1.5 group-hover:text-accent transition-colors">
-          {item.title}
-        </h3>
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs text-accent border border-accent/40 px-2 py-0.5 rounded-full">
+      <div className="border-t border-hairline pt-3">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <span className="text-[10px] tracking-[0.1em] uppercase text-navy-45">
             {normalize(item.genre)}
           </span>
-          <span className="text-xs text-text-secondary">{item.year}</span>
-          {item.client && <span className="text-xs text-text-secondary">· {item.client}</span>}
+          <span className="text-[10px] tracking-[0.08em] uppercase text-navy-45">
+            {item.year}
+          </span>
         </div>
+        <h3 className="text-[15px] font-medium tracking-[-0.01em] text-navy group-hover:text-lavender transition-colors leading-snug mb-1">
+          {item.title}
+        </h3>
+        {item.client && (
+          <p className="text-[12px] text-navy-65">{item.client}</p>
+        )}
       </div>
     </motion.div>
   )
@@ -95,22 +96,24 @@ export default function PromoVideoSection() {
   }
 
   return (
-    <SectionWrapper id="promo-video" className="bg-bg-primary">
-      {/* 섹션 헤더 */}
-      <div className="mb-10">
-        <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">Portfolio</p>
-        <h2 className="font-display text-section font-bold text-text-primary">홍보영상</h2>
-        <p className="text-text-secondary mt-3 text-sm max-w-md">
-          공연의 티저·트레일러·프로모션 영상. 10년간 함께한 작품들을 소개합니다.
+    <SectionWrapper id="promo-video">
+      <div className="mb-12">
+        <p className="text-[11px] tracking-[0.12em] uppercase text-navy-65 mb-6">
+          <span className="text-navy font-medium mr-2.5">01</span>Work · Film
+        </p>
+        <h2 className="text-h2 font-semibold text-navy max-w-[18ch] mb-4">
+          홍보영상 — 브랜드 & 공연 필름
+        </h2>
+        <p className="text-[17px] leading-[1.6] text-navy-65 max-w-[46ch]">
+          공연의 티저·트레일러·브랜드 캠페인. 10년간 축적한 필름 워크를 모았습니다.
         </p>
       </div>
 
       <GenreFilter selected={genre} onChange={(g) => { setGenre(g); setExpanded(false) }} />
 
-      {/* 그리드 */}
       <motion.div
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14 mb-12"
       >
         <AnimatePresence mode="popLayout">
           {filtered.map((item) => (
@@ -119,23 +122,17 @@ export default function PromoVideoSection() {
         </AnimatePresence>
       </motion.div>
 
-      {/* 더보기 / 접기 */}
       {allFiltered.length > allFiltered.filter((v) => v.featured).length && (
-        <div className="flex justify-center">
+        <div>
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors border border-border-custom hover:border-accent px-6 py-2.5 rounded"
+            className="inline-flex items-center gap-2 text-[12px] tracking-[0.08em] uppercase text-navy-65 hover:text-lavender transition-colors"
           >
-            {expanded ? '접기' : `전체 보기 (${allFiltered.length}편)`}
-            <ChevronDown
-              size={16}
-              className={`transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
-            />
+            {expanded ? '← Collapse' : `View all (${allFiltered.length}) →`}
           </button>
         </div>
       )}
 
-      {/* 라이트박스 */}
       {lightbox && (
         <YouTubeLightbox videoId={lightbox} onClose={() => setLightbox(null)} />
       )}

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, X, ChevronLeft, ChevronRight, Play } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react'
 import SectionWrapper   from '../common/SectionWrapper'
 import GenreFilter      from '../common/GenreFilter'
 import PlaceholderImage from '../common/PlaceholderImage'
@@ -10,17 +10,12 @@ import stageData from '../../data/stage-videos.json'
 const GENRE_MAP = { 음악극: '기타', 다원예술극: '기타', 무용: '기타', 페스티벌: '기타', 방송: '기타' }
 const normalize = (g) => GENRE_MAP[g] || g
 
-const ROLE_COLORS = {
-  '프로젝션 디자인':   'bg-accent/10 text-accent border-accent/30',
-  '백그라운드 영상':   'bg-accent-sub/10 text-accent-sub border-accent-sub/30',
-  '인터랙티브 효과':   'bg-accent/10 text-accent border-accent/30',
-  '무대영상 디자인':   'bg-accent-sub/10 text-accent-sub border-accent-sub/30',
-}
-
 function RoleTag({ role }) {
-  const cls = ROLE_COLORS[role] || 'bg-bg-tertiary text-text-secondary border-border-custom'
   return (
-    <span className={`text-xs border px-2 py-0.5 rounded-full ${cls}`}>{role}</span>
+    <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.1em] uppercase text-navy-65">
+      <span className="inline-block w-1.5 h-px bg-lavender" aria-hidden="true" />
+      {role}
+    </span>
   )
 }
 
@@ -36,84 +31,84 @@ function ExpandedView({ item, onClose }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="absolute inset-0 bg-black/85" onClick={onClose} />
+      <div className="absolute inset-0 bg-navy/85" onClick={onClose} />
       <motion.div
-        className="relative bg-bg-secondary border border-border-custom rounded-lg w-full max-w-2xl max-h-[85vh] overflow-y-auto"
+        className="relative bg-cream border border-hairline rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto"
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
         transition={{ duration: 0.25 }}
       >
-        {/* 닫기 */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 text-text-secondary hover:text-text-primary transition-colors"
+          className="absolute top-4 right-4 z-10 text-navy-65 hover:text-navy transition-colors"
+          aria-label="Close"
         >
           <X size={20} />
         </button>
 
-        {/* 스틸컷 슬라이더 */}
         <div className="relative">
           {stills.length > 0 ? (
             <>
               <img
                 src={stills[stillIdx]}
                 alt={`${item.title} 스틸 ${stillIdx + 1}`}
-                className="w-full aspect-video object-cover rounded-t-lg"
+                className="w-full aspect-video object-cover rounded-t-xl"
               />
               {stills.length > 1 && (
                 <>
                   <button onClick={() => setStillIdx((i) => (i - 1 + stills.length) % stills.length)}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-colors">
-                    <ChevronLeft size={16} className="text-white" />
+                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-navy/60 hover:bg-navy/80 rounded-full p-1.5 transition-colors"
+                    aria-label="Previous still">
+                    <ChevronLeft size={16} className="text-cream" />
                   </button>
                   <button onClick={() => setStillIdx((i) => (i + 1) % stills.length)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-colors">
-                    <ChevronRight size={16} className="text-white" />
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-navy/60 hover:bg-navy/80 rounded-full p-1.5 transition-colors"
+                    aria-label="Next still">
+                    <ChevronRight size={16} className="text-cream" />
                   </button>
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
                     {stills.map((_, i) => (
                       <button key={i} onClick={() => setStillIdx(i)}
-                        className={`w-1.5 h-1.5 rounded-full transition-colors ${i === stillIdx ? 'bg-accent' : 'bg-white/40'}`} />
+                        className={`w-1.5 h-1.5 rounded-full transition-colors ${i === stillIdx ? 'bg-lavender' : 'bg-cream/50'}`}
+                        aria-label={`Go to still ${i + 1}`} />
                     ))}
                   </div>
                 </>
               )}
             </>
           ) : (
-            <PlaceholderImage aspectRatio="16/9" label="무대 스틸컷 준비 중" className="rounded-t-lg" />
+            <PlaceholderImage aspectRatio="16/9" label="무대 스틸컷 준비 중" className="rounded-t-xl" />
           )}
 
-          {/* 실황 클립 버튼 */}
           {item.clipUrl && (
             <button
               onClick={() => setLightbox(true)}
-              className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-accent hover:bg-accent-hover text-bg-primary text-xs font-semibold px-3 py-1.5 rounded transition-colors"
+              className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 bg-navy hover:bg-navy/90 text-cream text-[11px] tracking-[0.08em] uppercase px-3 py-1.5 rounded-md transition-colors"
             >
               <Play size={12} /> 실황 클립
             </button>
           )}
         </div>
 
-        {/* 상세 정보 */}
         <div className="p-6">
-          <div className="flex items-start justify-between gap-4 mb-3">
-            <h3 className="font-display text-xl font-bold text-text-primary">{item.title}</h3>
-            <span className="text-text-secondary text-sm shrink-0">{item.year}</span>
+          <div className="flex items-start justify-between gap-4 mb-4">
+            <h3 className="text-xl font-medium tracking-[-0.015em] text-navy">{item.title}</h3>
+            <span className="text-[12px] tracking-[0.08em] uppercase text-navy-45 shrink-0">{item.year}</span>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap items-center gap-4 mb-4 border-t border-hairline pt-3">
             <RoleTag role={item.roleType} />
-            <span className="text-xs border border-border-custom text-text-secondary px-2 py-0.5 rounded-full">
+            <span className="text-[10px] tracking-[0.1em] uppercase text-navy-45">
               {normalize(item.genre)}
             </span>
           </div>
 
           {item.client && (
-            <p className="text-text-secondary text-sm mb-3">제작: {item.client}</p>
+            <p className="text-[13px] text-navy-65 mb-3">제작 · {item.client}</p>
           )}
           {item.description && (
-            <p className="text-text-secondary text-sm leading-relaxed">{item.description}</p>
+            <p className="text-[14px] text-navy-65 leading-relaxed">{item.description}</p>
           )}
         </div>
       </motion.div>
@@ -130,17 +125,17 @@ function ExpandedView({ item, onClose }) {
 
 function StageCard({ item, onClick }) {
   return (
-    <motion.div
+    <motion.button
+      type="button"
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.35 }}
-      className="group cursor-pointer bg-bg-secondary hover:bg-bg-tertiary border border-border-custom hover:border-accent/30 rounded-lg overflow-hidden transition-all duration-300"
+      className="group cursor-pointer text-left border-t border-hairline pt-4 transition-[padding] duration-300 hover:pl-4"
       onClick={() => onClick(item)}
     >
-      {/* 썸네일 */}
-      <div className="overflow-hidden">
+      <div className="overflow-hidden mb-4">
         {item.stills?.[0] ? (
           <img
             src={item.stills[0]}
@@ -153,22 +148,19 @@ function StageCard({ item, onClick }) {
         )}
       </div>
 
-      {/* 카드 정보 */}
-      <div className="p-4">
-        <h3 className="text-text-primary text-sm font-semibold mb-2 group-hover:text-accent transition-colors leading-snug">
-          {item.title}
-        </h3>
-        <div className="flex items-center gap-2 flex-wrap mb-2">
-          <RoleTag role={item.roleType} />
-        </div>
-        <div className="flex items-center gap-2 text-xs text-text-secondary">
-          <span>{normalize(item.genre)}</span>
-          <span>·</span>
-          <span>{item.year}</span>
-          {item.client && <><span>·</span><span>{item.client}</span></>}
-        </div>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <RoleTag role={item.roleType} />
+        <span className="text-[10px] tracking-[0.08em] uppercase text-navy-45">
+          {item.year}
+        </span>
       </div>
-    </motion.div>
+      <h3 className="text-[16px] font-medium tracking-[-0.015em] text-navy group-hover:text-lavender transition-colors leading-snug mb-1">
+        {item.title}
+      </h3>
+      <div className="text-[12px] text-navy-65">
+        {normalize(item.genre)}{item.client ? ` · ${item.client}` : ''}
+      </div>
+    </motion.button>
   )
 }
 
@@ -188,13 +180,16 @@ export default function StageVideoSection() {
   )
 
   return (
-    <SectionWrapper id="stage-video" className="bg-bg-secondary">
-      {/* 섹션 헤더 */}
-      <div className="mb-10">
-        <p className="text-accent text-xs tracking-[0.3em] uppercase mb-3">Portfolio</p>
-        <h2 className="font-display text-section font-bold text-text-primary">무대영상</h2>
-        <p className="text-text-secondary mt-3 text-sm max-w-md">
-          공연 무대 위 프로젝션·백그라운드·인터랙티브 효과. 무대를 완성하는 영상 디자인.
+    <SectionWrapper id="stage-video">
+      <div className="mb-12">
+        <p className="text-[11px] tracking-[0.12em] uppercase text-navy-65 mb-6">
+          <span className="text-navy font-medium mr-2.5">02</span>Work · Stage
+        </p>
+        <h2 className="text-h2 font-semibold text-navy max-w-[18ch] mb-4">
+          무대영상 디자인 — 프로젝션 & 라이브
+        </h2>
+        <p className="text-[17px] leading-[1.6] text-navy-65 max-w-[46ch]">
+          공연 무대 위 프로젝션·백그라운드·인터랙티브. 무대를 완성하는 영상 디자인.
         </p>
       </div>
 
@@ -202,7 +197,7 @@ export default function StageVideoSection() {
 
       <motion.div
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14 mb-12"
       >
         <AnimatePresence mode="popLayout">
           {filtered.map((item) => (
@@ -212,16 +207,12 @@ export default function StageVideoSection() {
       </motion.div>
 
       {allFiltered.length > allFiltered.filter((v) => v.featured).length && (
-        <div className="flex justify-center">
+        <div>
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors border border-border-custom hover:border-accent px-6 py-2.5 rounded"
+            className="inline-flex items-center gap-2 text-[12px] tracking-[0.08em] uppercase text-navy-65 hover:text-lavender transition-colors"
           >
-            {expanded ? '접기' : `전체 보기 (${allFiltered.length}편)`}
-            <ChevronDown
-              size={16}
-              className={`transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
-            />
+            {expanded ? '← Collapse' : `View all (${allFiltered.length}) →`}
           </button>
         </div>
       )}

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import aboutData from '../../data/about.json'
 
 function scrollTo(href) {
@@ -6,103 +5,99 @@ function scrollTo(href) {
   if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, delay, ease: 'easeOut' },
-})
-
 export default function HeroSection() {
-  const hasVideo = Boolean(aboutData.heroVideoUrl)
+  const { hero, meta, stats } = aboutData
+  const h1Lines = hero?.h1Lines ?? ['We film', 'the <em>reaction</em>', 'between things.']
 
   return (
     <section
       id="hero"
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen max-w-[1480px] mx-auto pt-[160px] pb-[120px] px-6 md:px-12 grid md:grid-cols-[1.05fr_1fr] gap-16 items-center"
     >
-      {/* 배경: 영상 또는 그라데이션 플레이스홀더 */}
-      {hasVideo ? (
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          src={aboutData.heroVideoUrl}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster=""
-        />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-bg-primary via-[#EEE2CB] to-[#E0D3B9]">
-          {/* 미묘한 그레인 텍스처 */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            }}
+      {/* 좌: 입자 → 곡선 SVG */}
+      <div className="mark-stage relative w-full aspect-square max-w-[380px] md:max-w-[640px] mx-auto">
+        <svg
+          className="hero-symbol w-full h-full overflow-visible"
+          viewBox="0 0 100 100"
+          aria-hidden="true"
+        >
+          <line
+            className="ghost-line"
+            x1="30.91" y1="66.38" x2="67.63" y2="40.67"
+            stroke="#282D3C"
+            strokeWidth="0.25"
+            strokeDasharray="1.5 2.5"
           />
-        </div>
-      )}
-
-      {/* 오버레이 그라디언트 — 하단 텍스트 영역 가독성 보강 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/60 via-transparent to-bg-primary/10" />
-
-      {/* 텍스트 컨텐츠 */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-
-        <motion.p
-          {...fadeUp(0.2)}
-          className="text-accent text-sm tracking-[0.3em] uppercase mb-6 font-pretendard"
-        >
-          공연예술 영상감독
-        </motion.p>
-
-        <motion.h1
-          {...fadeUp(0.4)}
-          className="chemiflow-wordmark font-display italic text-hero font-normal mb-6 leading-[1.2] pb-4"
-        >
-          Chemiflow
-        </motion.h1>
-
-        <motion.p
-          {...fadeUp(0.6)}
-          className="text-text-secondary text-lg md:text-xl mb-12 font-pretendard tracking-wide"
-        >
-          {aboutData.positioning}
-        </motion.p>
-
-        <motion.div
-          {...fadeUp(0.8)}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <button
-            onClick={() => scrollTo('#promo-video')}
-            className="px-8 py-3.5 border border-text-primary/40 text-text-primary hover:border-accent hover:text-accent text-sm tracking-widest transition-all duration-300"
-          >
-            작품 보기
-          </button>
-          <button
-            onClick={() => scrollTo('#contact')}
-            className="px-8 py-3.5 bg-accent hover:bg-accent-hover text-bg-primary font-semibold text-sm tracking-widest transition-colors duration-300"
-          >
-            프로젝트 문의
-          </button>
-        </motion.div>
+          <path
+            className="curve-base"
+            d="M 30.91 66.38 Q 29.27 36.61 67.63 40.67"
+            fill="none" stroke="#AFA4CE" strokeWidth="1.5" strokeLinecap="round"
+          />
+          <path
+            className="curve-taper"
+            d="M 30.91 66.38 Q 29.27 36.61 67.63 40.67"
+            fill="none" stroke="#AFA4CE" strokeWidth="3" strokeLinecap="round"
+          />
+          <g className="p-small">
+            <circle cx="30.91" cy="66.38" r="3.5" fill="#282D3C" />
+          </g>
+          <g className="p-large">
+            <circle cx="67.63" cy="40.67" r="7" fill="#AFA4CE" />
+          </g>
+        </svg>
       </div>
 
-      {/* 스크롤 인디케이터 */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
-      >
-        <span className="text-xs text-text-secondary tracking-widest">SCROLL</span>
-        <motion.div
-          className="w-px h-10 bg-gradient-to-b from-text-secondary to-transparent"
-          animate={{ scaleY: [0.4, 1, 0.4], opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      {/* 우: Copy 컬럼 */}
+      <div className="copy max-w-[560px]">
+        <p className="hero-eyebrow flex items-center gap-3 text-[12px] tracking-[0.12em] uppercase text-navy-65 mb-6">
+          <span className="inline-block w-5 h-px bg-lavender" aria-hidden="true" />
+          {hero?.eyebrow ?? 'Chemiflow · Film & performance studio · Seoul'}
+        </p>
+
+        <div className="display-lines mb-8">
+          <h1 aria-label="We film the reaction between things.">
+            {h1Lines.map((line, i) => (
+              <span key={i} className="line">
+                <span dangerouslySetInnerHTML={{ __html: line }} />
+              </span>
+            ))}
+          </h1>
+        </div>
+
+        <p
+          className="hero-deck text-[19px] leading-[1.55] text-navy-65 max-w-[48ch] mb-12 [&>b]:text-navy [&>b]:font-medium"
+          dangerouslySetInnerHTML={{ __html: hero?.deck ?? '' }}
         />
-      </motion.div>
+
+        <dl className="hero-meta grid grid-cols-3 gap-6 md:gap-10 pt-7 border-t border-hairline max-w-[520px]">
+          <div>
+            <dt className="text-[10.5px] tracking-[0.1em] uppercase text-navy-45">Est.</dt>
+            <dd className="text-[15px] font-medium text-navy mt-1">{meta?.est ?? 'Seoul · 2022'}</dd>
+          </div>
+          <div>
+            <dt className="text-[10.5px] tracking-[0.1em] uppercase text-navy-45">Works</dt>
+            <dd className="text-[15px] font-medium text-navy mt-1">{stats?.totalWorks ?? '80+'} filmed</dd>
+          </div>
+          <div>
+            <dt className="text-[10.5px] tracking-[0.1em] uppercase text-navy-45">Now booking</dt>
+            <dd className="text-[15px] font-medium text-navy mt-1">{meta?.booking ?? 'Q3 · 2026'}</dd>
+          </div>
+        </dl>
+      </div>
+
+      {/* 스크롤 큐 */}
+      <button
+        type="button"
+        onClick={() => scrollTo('#promo-video')}
+        aria-label="Scroll to Work · Film"
+        className="hero-scroll absolute left-1/2 bottom-7 -translate-x-1/2 flex flex-col items-center gap-2.5 text-[10px] tracking-[0.14em] uppercase text-navy-45 hover:text-navy transition-colors"
+      >
+        <span>Scroll</span>
+        <span className="relative w-px h-8 overflow-hidden bg-gradient-to-b from-navy-45 to-transparent">
+          <span className="hero-scroll-tick absolute -top-4 left-0 w-px h-4 bg-navy" />
+        </span>
+        <span>01 / 04</span>
+      </button>
     </section>
   )
 }

@@ -42,8 +42,8 @@ export default function YouTubeLightbox({ videoId, onClose }) {
           {/* 닫기 버튼 */}
           <button
             onClick={onClose}
-            className="absolute -top-10 right-0 text-text-secondary hover:text-text-primary transition-colors"
-            aria-label="닫기"
+            className="absolute -top-10 right-0 text-cream/70 hover:text-cream transition-colors"
+            aria-label="Close"
           >
             <X size={28} />
           </button>

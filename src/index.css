@@ -8,11 +8,12 @@ html {
 }
 
 body {
-  background-color: #F4EDE1;
-  color: #2D2447;
-  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  background-color: #FBF8F0;
+  color: #282D3C;
+  font-family: 'Pretendard Variable', 'Pretendard', 'Apple SD Gothic Neo', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
 }
 
 /* 기본 스크롤바 스타일 (Webkit) */
@@ -20,17 +21,17 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F4EDE1;
+  background: #FBF8F0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D6C9AE;
+  background: rgba(40,45,60,0.12);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9A85C5;
+  background: #AFA4CE;
 }
 
-/* ── 브랜드 타이틀 시머 ───────────────────────────────── */
+/* ── 브랜드 타이틀 시머 (Navbar 워드마크 retain) ─────────── */
 @keyframes chemiflow-shine {
   0%   { background-position: 200% 50%; }
   85%  { background-position: -100% 50%; }
@@ -40,13 +41,13 @@ body {
 .chemiflow-wordmark {
   background-image: linear-gradient(
     115deg,
-    #2D2447 0%,
-    #2D2447 42%,
+    #282D3C 0%,
+    #282D3C 42%,
     #C9BEE1 48%,
-    #F4EDE1 50%,
+    #FBF8F0 50%,
     #C9BEE1 52%,
-    #2D2447 58%,
-    #2D2447 100%
+    #282D3C 58%,
+    #282D3C 100%
   );
   background-size: 220% 100%;
   background-repeat: no-repeat;
@@ -54,20 +55,130 @@ body {
           background-clip: text;
   -webkit-text-fill-color: transparent;
           color: transparent;
-  filter:
-    drop-shadow(0 1px 1px rgba(45, 36, 71, 0.18))
-    drop-shadow(0 6px 18px rgba(45, 36, 71, 0.22));
   animation: chemiflow-shine 4s ease-in-out infinite;
 }
 
+/* ── 라이브 티커 도트 ─────────────────────────────────── */
+@keyframes live-pulse { 50% { opacity: 0.3; } }
+.live-dot { animation: live-pulse 1.6s ease-in-out infinite; }
+
+/* ── Hero H1 line-up ──────────────────────────────────── */
+.display-lines h1 {
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.display-lines .line {
+  display: block;
+  overflow: hidden;
+}
+.display-lines .line > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: lineUp 1s cubic-bezier(.2,.8,.2,1) forwards;
+}
+.display-lines .line:nth-child(1) > span { animation-delay: 2.45s; }
+.display-lines .line:nth-child(2) > span { animation-delay: 2.55s; }
+.display-lines .line:nth-child(3) > span { animation-delay: 2.65s; }
+.display-lines em {
+  font-style: normal;
+  color: #AFA4CE;
+}
+.display-lines em::after {
+  content: "";
+  display: inline-block;
+  width: 0.32em; height: 0.32em;
+  border-radius: 50%;
+  background: #AFA4CE;
+  margin-left: 0.06em;
+  vertical-align: 0.42em;
+  transform: scale(0);
+  animation: dotIn 0.4s ease-out 3.2s forwards;
+}
+
+@keyframes lineUp { to { transform: translateY(0); } }
+@keyframes dotIn  { to { transform: scale(1); } }
+
+/* ── Hero SVG (particle → curve) ───────────────────────── */
+@keyframes pSmallIn {
+  0%   { transform: translate(-60px, 40px) scale(0.3); opacity: 0; }
+  70%  { opacity: 1; }
+  100% { transform: translate(0,0) scale(1); opacity: 1; }
+}
+@keyframes pLargeIn {
+  0%   { transform: translate(60px, -40px) scale(0.3); opacity: 0; }
+  70%  { opacity: 1; }
+  100% { transform: translate(0,0) scale(1); opacity: 1; }
+}
+@keyframes curveDraw { to { stroke-dashoffset: 0; } }
+@keyframes curveDrawTaper { to { stroke-dasharray: 31 100; stroke-dashoffset: -15; } }
+@keyframes ghostIn   { to { opacity: 0.18; } }
+@keyframes heroPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+.hero-symbol .ghost-line {
+  opacity: 0;
+  animation: ghostIn 1.2s ease-out 0.2s forwards;
+}
+.hero-symbol .curve-base {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: curveDraw 1.4s cubic-bezier(.65,0,.35,1) 1.2s forwards;
+}
+.hero-symbol .curve-taper {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: curveDrawTaper 1.2s cubic-bezier(.65,0,.35,1) 1.35s forwards;
+}
+.hero-symbol .p-small {
+  transform-origin: 30.91px 66.38px;
+  animation: pSmallIn 1.6s cubic-bezier(.2,.7,.25,1) 0.25s both;
+}
+.hero-symbol .p-large {
+  transform-box: fill-box;
+  transform-origin: 67.63px 40.67px;
+  animation: pLargeIn 1.6s cubic-bezier(.2,.7,.25,1) 0.45s both;
+}
+.hero-symbol .p-large circle {
+  animation: heroPulse 3.6s ease-in-out 2.6s infinite;
+}
+
+/* ── Hero fade utilities ──────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollTick {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(40px); }
+  100% { transform: translateY(0); }
+}
+
+.hero-eyebrow { opacity: 0; animation: fadeUp .9s ease-out 2.2s forwards; }
+.hero-deck    { opacity: 0; animation: fadeUp .9s ease-out 2.9s forwards; }
+.hero-meta    { opacity: 0; animation: fadeUp .9s ease-out 3.1s forwards; }
+.hero-scroll  { opacity: 0; animation: fadeUp 1s ease-out 3.3s forwards; }
+.hero-scroll-tick { animation: scrollTick 2.2s ease-in-out 3.8s infinite; }
+
+/* ── Reduced motion guards ────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .chemiflow-wordmark { animation: none; background-position: 50% 50%; }
+  .live-dot { animation: none; }
+  .display-lines .line > span { transform: translateY(0); animation: none; }
+  .display-lines em::after    { transform: scale(1);      animation: none; }
+  .hero-symbol * { animation: none !important; }
+  .hero-symbol .ghost-line { opacity: 0.18; }
+  .hero-symbol .curve-base,
+  .hero-symbol .curve-taper { stroke-dashoffset: 0; }
+  .hero-symbol .curve-taper { stroke-dasharray: 31 100; stroke-dashoffset: -15; }
+  .hero-symbol .p-small, .hero-symbol .p-large { opacity: 1; transform: none; }
+  .hero-eyebrow, .hero-deck, .hero-meta, .hero-scroll { opacity: 1; animation: none; }
+  .hero-scroll-tick { animation: none; }
 }
 
 /* ── 유틸리티 레이어 ─────────────────────────────────── */
 @layer utilities {
   .section-padding {
-    @apply py-20 md:py-[100px] px-4 md:px-8 lg:px-16;
+    @apply py-24 md:py-[120px] px-6 md:px-12;
   }
 
   .container-max {
@@ -84,7 +195,7 @@ body {
     left: 0;
     bottom: -4px;
     width: 100%;
-    height: 2px;
-    background-color: #6B5A96;
+    height: 1px;
+    background-color: #AFA4CE;
   }
 }

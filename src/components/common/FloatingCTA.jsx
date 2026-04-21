@@ -8,9 +8,9 @@ export default function FloatingCTA() {
     <div className="fixed bottom-6 left-0 right-0 flex justify-center z-40 md:hidden">
       <button
         onClick={handleClick}
-        className="px-6 py-3 bg-accent hover:bg-accent-hover text-bg-primary font-semibold text-sm rounded-full shadow-lg transition-colors"
+        className="px-6 py-3 bg-navy hover:bg-navy/90 text-cream text-[12px] tracking-[0.04em] uppercase rounded-full shadow-lg transition-colors"
       >
-        프로젝트 문의
+        Start a project
       </button>
     </div>
   )
